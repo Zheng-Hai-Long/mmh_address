@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmh.dao.CityAreaDao">
+
+	<select id="queryById" parameterType="integer" resultType="com.mmh.entity.CityArea">
+		select PRV_NUM_ID, CITY_NUM_ID, CITY_AREA_NUM_ID, CITY_AREA_SIM_NO, CITY_AREA_NAME, DIV_NUM_ID, DEL_STATE from gb_city_area
+		where CITY_AREA_NUM_ID = #{CITY_AREA_NUM_ID}
+	</select>
+
+	<select id="queryOneByProvinceId" parameterType="integer" resultType="com.mmh.entity.CityArea">
+		select PRV_NUM_ID, CITY_NUM_ID, CITY_AREA_NUM_ID, CITY_AREA_SIM_NO, CITY_AREA_NAME, DIV_NUM_ID, DEL_STATE from gb_city_area
+		where PRV_NUM_ID = #{PRV_NUM_ID} limit 1
+	</select>
+
+	<select id="queryByParam" parameterType="com.mmh.dto.ProvinceDTO" resultType="com.mmh.entity.CityArea">
+		select PRV_NUM_ID, CITY_NUM_ID, CITY_AREA_NUM_ID, CITY_AREA_SIM_NO, CITY_AREA_NAME, DIV_NUM_ID, DEL_STATE from gb_city_area
+		<where>
+			<if test="code != null">
+				and CITY_AREA_NUM_ID = #{code}
+			</if>
+			<if test="addressName != null and addressName != ''">
+				and CITY_AREA_NAME = #{addressName}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryAll" resultType="com.mmh.entity.CityArea">
+		select * from gb_city_area
+	</select>
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmh.dao.ProvinceDao">
+
+	<select id="queryById" parameterType="integer" resultType="com.mmh.entity.Province">
+		select  PRV_NUM_ID, PRV_SIM_NO, PRV_NAME, PRV_SIM_NAME, DEL_STATE, SORT  from gb_prv where PRV_NUM_ID = #{PRV_NUM_ID}
+	</select>
+
+	<select id="queryByParam" parameterType="com.mmh.dto.ProvinceDTO" resultType="com.mmh.entity.Province">
+		select PRV_NUM_ID, PRV_SIM_NO, PRV_NAME, PRV_SIM_NAME, DEL_STATE, SORT from gb_prv
+		<where>
+			<if test="code != null">
+				and PRV_NUM_ID = #{code}
+			</if>
+			<if test="addressName != null and addressName != ''">
+				and PRV_NAME = #{addressName}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryAll" resultType="com.mmh.entity.Province">
+		select * from gb_prv
+	</select>
+</mapper>

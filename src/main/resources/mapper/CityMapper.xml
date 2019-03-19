@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmh.dao.CityDao">
+
+	<select id="queryById" parameterType="integer" resultType="com.mmh.entity.City">
+		select PRV_NUM_ID, CITY_NUM_ID, CITY_SIM_NO, CITY_NAME, CITY_SIM_NAME, DEL_STATE from gb_city
+		where CITY_NUM_ID = #{CITY_NUM_ID}
+	</select>
+
+	<select id="queryByParam" parameterType="com.mmh.dto.ProvinceDTO" resultType="com.mmh.entity.City">
+		select PRV_NUM_ID, CITY_NUM_ID, CITY_SIM_NO, CITY_NAME, CITY_SIM_NAME, DEL_STATE from gb_city
+		<where>
+			<if test="code != null">
+				and CITY_NUM_ID = #{code}
+			</if>
+			<if test="addressName != null and addressName != ''">
+				and CITY_NAME = #{addressName}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryAll" resultType="com.mmh.entity.City">
+		select * from gb_city
+	</select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmh.dao.CityAreaAddDao">
+
+	<insert id="insert" parameterType="com.mmh.entity.CityArea">
+		insert into gb_city_area_add
+		(PRV_NUM_ID, CITY_NUM_ID, CITY_AREA_NUM_ID, CITY_AREA_SIM_NO, CITY_AREA_NAME, DIV_NUM_ID, DEL_STATE)
+		values
+		(#{PRV_NUM_ID}, #{CITY_NUM_ID}, #{CITY_AREA_NUM_ID}, #{CITY_AREA_SIM_NO}, #{CITY_AREA_NAME}, #{DIV_NUM_ID}, #{DEL_STATE})
+	</insert>
+
+</mapper>

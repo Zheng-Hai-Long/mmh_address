@@ -1,0 +1,28 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.10.80:3306/test_hailong?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: mamahao
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  application:
+      name: mmh_address
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.mmh.entity  # 注意：对应实体类的路径
+#  configuration:
+#    mapUnderscoreToCamelCase: true
+#    map-underscore-to-camel-case: true
+
+
+
+
