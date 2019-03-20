@@ -12,15 +12,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @RestController
@@ -32,10 +30,12 @@ public class ProvinceController {
     private ProvinceService provinceService;
 
     @GetMapping("/create/excel")
-    public String createAddressExcel() throws IOException {
+    public String createAddressExcel(@RequestParam("url") String url) throws Exception {
 
-        File file = new File("C:/Users/Jack/Desktop/201902061009.html");
+        urlToHtmlFile(url);
+        File file = new File("src/main/html/address.html");
         Document doc = Jsoup.parse(file, "utf-8");
+
         //从链接去获取页面省市区信息，信息不全
         //Document doc= Jsoup.parse(new URL("http://www.mca.gov.cn/article/sj/xzqh/2018/201804-12/20181201301111.html"), 2000);
 
@@ -89,5 +89,36 @@ public class ProvinceController {
             }
         }
         return provinceDTOList;
+    }
+
+    /**
+     * 将链接的页面转成html文件
+     * @param url
+     * @throws Exception
+     */
+    public void urlToHtmlFile(String url) throws Exception {
+        InputStream inputStream;//接收字节输入流
+        InputStreamReader inputStreamReader;//将字节输入流转换成字符输入流
+        BufferedReader bufferedReader;//为字符输入流加缓冲
+        FileOutputStream fileOutputStream;//字节输出流
+        OutputStreamWriter outputStreamWriter;//将字节输出流转换成字符输出流
+
+        URL wangyi = new URL(url);
+        inputStream = wangyi.openStream();
+        inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+        bufferedReader = new BufferedReader(inputStreamReader);
+        String s;
+        File dest = new File("src/main/html/address.html");
+        fileOutputStream = new FileOutputStream(dest);
+        outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
+        while ((s = bufferedReader.readLine()) != null) {
+            outputStreamWriter.write(s);
+        }
+
+        outputStreamWriter.close();
+        fileOutputStream.close();
+        bufferedReader.close();
+        inputStreamReader.close();
+        inputStream.close();
     }
 }
